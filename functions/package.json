@@ -21,6 +21,12 @@
     "grammy": "^1.36.3"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.27.5",
+    "parserOptions": {
+      "requireConfigFile": false,
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
     "eslint": "^8.15.0",
     "eslint-config-google": "^0.14.0",
     "firebase-functions-test": "^3.1.0"

@@ -161,9 +161,9 @@ exports.telegramWebhook = functions.https.onRequest(async (req, res) => {
 
       if (chatId) {
         await bot.api.sendMessage(
-          chatId,
-          "🚫 You have reached the daily usage limit. Please try again later.",
-          { reply_to_message_id: messageId }
+            chatId,
+            "🚫 You have reached the daily usage limit. Please try again later.",
+            {reply_to_message_id: messageId},
         );
       }
 

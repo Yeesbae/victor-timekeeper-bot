@@ -3,8 +3,11 @@ module.exports = {
     es6: true,
     node: true,
   },
+  parser: "@babel/eslint-parser",
   parserOptions: {
-    "ecmaVersion": 2018,
+    requireConfigFile: false, // if you don't have a babel config
+    ecmaVersion: 2020,
+    sourceType: "module",
   },
   extends: [
     "eslint:recommended",
