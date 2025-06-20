@@ -3,7 +3,11 @@ const {Bot, webhookCallback} = require("grammy");
 const admin = require("firebase-admin");
 const {FirebaseFunctionsRateLimiter} =
   require("firebase-functions-rate-limiter");
+const botToken = functions.config().telegram.token;
 
+if (!botToken) {
+  throw new Error("Telegram bot token is not set in Firebase config.");
+}
 
 admin.initializeApp({
   databaseURL: "https://victortimekeeperbot-default-rtdb.asia-southeast1.firebasedatabase.app/",
@@ -20,8 +24,7 @@ const limiter = FirebaseFunctionsRateLimiter.withRealtimeDbBackend(
     database,
 );
 
-const bot = new Bot("7341843537:AAEaf8Hfkh5ysUOC5c7NqcoQZWeCh-B5dC0");
-
+const bot = new Bot(botToken);
 
 /**
  * Checks if the command is from the allowed chat group.
