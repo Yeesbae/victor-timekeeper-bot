@@ -151,11 +151,22 @@ exports.telegramWebhook = functions.https.onRequest(async (req, res) => {
         "unknown";
     await limiter.rejectOnQuotaExceededOrRecordUsage(userId);
 
-    // Process Telegram update if within rate limit
     return webhookCallback(bot)(req, res);
   } catch (error) {
     if (error.message && error.message.includes("Quota exceeded")) {
       console.log(`Rate limit exceeded for user ${userId}`);
+
+      const chatId = req.body.message?.chat?.id;
+      const messageId = req.body.message?.message_id;
+
+      if (chatId) {
+        await bot.api.sendMessage(
+          chatId,
+          "🚫 You have reached the daily usage limit. Please try again later.",
+          { reply_to_message_id: messageId }
+        );
+      }
+
       return res.status(429).send("Too many requests. Please try again later.");
     }
     console.error("Error:", error);
